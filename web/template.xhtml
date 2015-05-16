@@ -15,26 +15,28 @@ and open the template in the editor.
         <h:outputStylesheet library="css" name="bootstrap.css"/>
     </h:head>
     <h:body class="jumbotron">
-            <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container container-fluid">
-                    <div class="navbar-header">
-                        <h:link value="UAG Load Balancer" outcome="index" class="navbar-brand"/>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown dropdown-menu-left"><h:link value="Servers" outcome="servers"/></li>
-                        </ul>
-                        <ul class="nav navbar-right">
-                            <li class="dropdown dropdown-menu dropdown-menu-right"><h:link value="Configure" outcome="configure"/></li>
-                        </ul>
-                    </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container container-fluid">
+                <div class="navbar-header">
+                    <h:link value="UAG Load Balancer" outcome="index" class="navbar-brand"/>
                 </div>
-            </nav>
-            <div class="container">
-                <div class="panel-title">
-                    <ui:insert name="title"/>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown dropdown-menu-left"><h:link value="Servers" outcome="servers"/></li>
+                    </ul>
+                    <ul class="nav navbar-right">
+                        <li class="dropdown dropdown-menu dropdown-menu-right"><h:link value="Configure" outcome="configure"/></li>
+                    </ul>
                 </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="panel-title">
+                <ui:insert name="title"/>
+            </div>
+            <div class="panel-primary">
                 <ui:insert name="content"/>
             </div>
+        </div>
     </h:body>
 </html>
