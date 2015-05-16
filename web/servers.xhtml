@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="title">Servers</ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid class="table table-responsive">
+                        <h:inputText id="host" value="#{serverBean.hostAddr}" class="form-control" pt:placeholder="Host"/>
+                        <h:inputText id="port" value="#{serverBean.port}" class="form-control" title="Port"/>
+                        <h:inputText id="priority" value="#{serverBean.priority}" class="form-control" title="Priority"/>
+
+                        <h:outputLabel for="enabled" value="Enabled:"/>
+                        <h:selectOneRadio value="#{serverBean.enabled}">
+                            <f:selectItem itemLabel="True" itemValue="#{true}"/>
+                            <f:selectItem itemLabel="False" itemValue="#{false}"/>
+                        </h:selectOneRadio>
+                        <h:commandButton id="add" value="Add Host" actionListener="#{serverBean.add}" class="btn btn-success" />
+                    </h:panelGrid>
+                    <h:dataTable id="tableHosts" value="#{serverBean.hosts}" var="host" class="table table-responsive">
+                        <h:column>
+                            <f:facet name="header" >Host Address</f:facet>
+                            <h:outputLabel value="#{host.ip}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Host Port</f:facet>
+                            <h:outputLabel value="#{host.port}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Priority</f:facet>
+                            <h:outputLabel value="#{host.priority}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Enabled</f:facet>
+                            <h:outputLabel value="#{host.enabled}"/>
+                        </h:column>
+                    </h:dataTable>
+                    <h:outputLabel value="> 0" rendered="#{serverBean.render}"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
