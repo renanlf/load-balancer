@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  *
  * @author renan
  */
-public class LoadBalancer {
+public class LoadBalancer extends Thread {
 
     private static LoadBalancer instance = null;
 

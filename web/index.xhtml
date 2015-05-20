@@ -10,8 +10,8 @@
                 <h:form>
                     <h:outputLabel value="Port: #{indexBean.port}"/>
                     <div class="panel-info">
-                        <h:commandButton class="btn btn-success" value="Active Load Balancer!" actionListener="#{indexBean.activate()}" rendered="#{indexBean.loadBalancer.active}"/>
-                        <h:commandButton class="btn btn-danger" value="Deactive Load Balancer!" actionListener="#{indexBean.deactivate()}" rendered="#{not indexBean.loadBalancer.active}"/>
+                        <h:commandButton class="btn btn-success" value="Active Load Balancer!" actionListener="#{indexBean.activate()}" rendered="#{not indexBean.loadBalancer.active}"/>
+                        <h:commandButton class="btn btn-danger" value="Deactive Load Balancer!" actionListener="#{indexBean.deactivate()}" rendered="#{indexBean.loadBalancer.active}"/>
                     </div>
                 </h:form>
             </ui:define>

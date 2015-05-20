@@ -22,6 +22,7 @@ public class ServerBean {
     private int port, priority;
     private boolean enabled, render;
     private Host[] hosts;
+    private Host host = new Host("", 0);
 
     @PostConstruct
     public void init() {
@@ -29,43 +30,19 @@ public class ServerBean {
     }
 
     public void add() {
-        Host host = new Host(hostAddr, port, priority, enabled);
         if (!LoadBalancer.getInstance().getHosts().contains(host)) {
-            LoadBalancer.getInstance().getHosts().add(host);
+            LoadBalancer.getInstance().getHosts().add(getHost());
 
             setHosts(LoadBalancer.getInstance().getHosts().toArray(new Host[0]));
         } else{
             setRender(true);
         }
     }
-
-    /**
-     * @return the hostAddr
-     */
-    public String getHostAddr() {
-        return hostAddr;
+    
+    public void updateSelectHost(Host host){
+        this.setHost(host);
     }
 
-    /**
-     * @param hostAddr the hostAddr to set
-     */
-    public void setHostAddr(String hostAddr) {
-        this.hostAddr = hostAddr;
-    }
-
-    /**
-     * @return the port
-     */
-    public int getPort() {
-        return port;
-    }
-
-    /**
-     * @param port the port to set
-     */
-    public void setPort(int port) {
-        this.port = port;
-    }
 
     /**
      * @return the hosts
@@ -79,20 +56,6 @@ public class ServerBean {
      */
     public void setHosts(Host[] hosts) {
         this.hosts = hosts;
-    }
-
-    /**
-     * @return the enabled
-     */
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
-     * @param enabled the enabled to set
-     */
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     /**
@@ -110,16 +73,17 @@ public class ServerBean {
     }
 
     /**
-     * @return the priority
+     * @return the host
      */
-    public int getPriority() {
-        return priority;
+    public Host getHost() {
+        return host;
     }
 
     /**
-     * @param priority the priority to set
+     * @param host the host to set
      */
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setHost(Host host) {
+        this.host = host;
     }
+
 }

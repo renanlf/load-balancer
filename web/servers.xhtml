@@ -13,22 +13,26 @@ and open the template in the editor.
 
     <body>
         <ui:composition template="template.xhtml">
-            <ui:define name="title">Servers</ui:define>
+            <ui:define name="title"><h:outputLabel value="Servers" class="control-label"/></ui:define>
             <ui:define name="content">
                 <h:form>
                     <h:panelGrid class="table table-responsive">
-                        <h:inputText id="host" value="#{serverBean.hostAddr}" class="form-control" pt:placeholder="Host"/>
-                        <h:inputText id="port" value="#{serverBean.port}" class="form-control" title="Port"/>
-                        <h:inputText id="priority" value="#{serverBean.priority}" class="form-control" title="Priority"/>
+                        <h:inputText id="host" value="#{serverBean.host.ip}" class="form-control" pt:placeholder="Host"/>
+                        <h:inputText id="port" value="#{serverBean.host.port}" class="form-control" title="Port"/>
+                        <h:inputText id="priority" value="#{serverBean.host.priority}" class="form-control" title="Priority"/>
 
                         <h:outputLabel for="enabled" value="Enabled:"/>
-                        <h:selectOneRadio value="#{serverBean.enabled}">
+                        <h:selectOneRadio value="#{serverBean.host.enabled}">
                             <f:selectItem itemLabel="True" itemValue="#{true}"/>
                             <f:selectItem itemLabel="False" itemValue="#{false}"/>
                         </h:selectOneRadio>
-                        <h:commandButton id="add" value="Add Host" actionListener="#{serverBean.add}" class="btn btn-success" />
+                        <h:commandButton id="add" value="Save Host" actionListener="#{serverBean.add}" class="btn btn-success" />
                     </h:panelGrid>
-                    <h:dataTable id="tableHosts" value="#{serverBean.hosts}" var="host" class="table table-responsive">
+                    
+                    
+                    <h:outputLabel value="Not possible save the same host!" rendered="#{serverBean.render}"/>
+                    
+                    <h:dataTable id="tableHosts" value="#{serverBean.hosts}" var="host" class="table table-responsive" title="Servers" >
                         <h:column>
                             <f:facet name="header" >Host Address</f:facet>
                             <h:outputLabel value="#{host.ip}"/>
@@ -48,8 +52,12 @@ and open the template in the editor.
                             <f:facet name="header">Enabled</f:facet>
                             <h:outputLabel value="#{host.enabled}"/>
                         </h:column>
+                        
+                        <h:column>
+                            <f:facet name="edit">Edit</f:facet>
+                            <h:commandButton value="Edit" actionListener="#{serverBean.updateSelectHost(host)}"/>
+                        </h:column>
                     </h:dataTable>
-                    <h:outputLabel value="> 0" rendered="#{serverBean.render}"/>
                 </h:form>
             </ui:define>
         </ui:composition>
