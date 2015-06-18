@@ -36,6 +36,7 @@ public class Workload extends Thread {
     public void run() {
         InputStream in;
         try {
+            long timeBegin = System.currentTimeMillis();
             in = socket.getInputStream();
             String get = getStringFromInputStream(in);
             String firstLine = get.split("\n")[0];
@@ -45,11 +46,14 @@ public class Workload extends Thread {
             HttpURLConnection conn = (HttpURLConnection) destiny.openConnection();
             byte[] byteData = new byte[2048];
             int length;
-            while((length=conn.getInputStream().read(byteData))!= -1){
+            while ((length = conn.getInputStream().read(byteData)) != -1) {
                 socket.getOutputStream().write(byteData, 0, length);
             }
             in.close();
             socket.close();
+            host.setConnections(host.getConnections()-1);
+            long time = System.currentTimeMillis() - timeBegin;
+            host.getTime().add(time);
         } catch (IOException ex) {
             host.setEnabled(false);
             Logger.getLogger(Workload.class.getName()).log(Level.SEVERE, null, ex);

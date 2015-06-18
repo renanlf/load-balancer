@@ -6,7 +6,7 @@
 package edu.br.ufrpe.uag.lb.model;
 
 import edu.br.ufrpe.uag.lb.algorithms.Algorithm;
-import edu.br.ufrpe.uag.lb.algorithms.RoundRobin;
+import edu.br.ufrpe.uag.lb.algorithms.DinamicWeight;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +25,9 @@ import java.util.logging.Logger;
  *
  * @author renan
  */
-public class LoadBalancer extends Thread {
+public class LoadBalancer {
+    
+    private static final int LIMIAR = 30;
 
     private static LoadBalancer instance = null;
 
@@ -47,7 +49,7 @@ public class LoadBalancer extends Thread {
 
     public static LoadBalancer getInstance() {
         if (instance == null) {
-            instance = new LoadBalancer(80, new RoundRobin());
+            instance = new LoadBalancer(80, new DinamicWeight());
         }
         return instance;
     }
@@ -57,8 +59,21 @@ public class LoadBalancer extends Thread {
         ServerSocket ss = null;
         try {
             ss = new ServerSocket(getPort());
+            int connections = 0;
             while (active) {
                 Socket socket = ss.accept();
+                
+                if(algorithm instanceof DinamicWeight){
+                    if(connections < LIMIAR){
+                        connections++;
+                    } else {
+                        DinamicWeight dW = (DinamicWeight) algorithm;
+                        System.out.println("UpdateTickets");
+                        dW.updateTicket(enabledHosts());
+                        connections = 0;
+                    }
+                }
+                
                 Host host = algorithm.getHost(enabledHosts());
                 new Workload(socket, host).start();
             }

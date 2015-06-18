@@ -5,6 +5,8 @@
  */
 package edu.br.ufrpe.uag.lb.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,12 +19,17 @@ public class Host {
     private int connections;
     private boolean enabled;
     private int priority;
+    private int remaningConnections = 0;
+    private List<Long> time;
+    private double ticket;
     
     public Host(String ip, int port){
         this.ip = ip;
         this.port = port;
         this.connections = 0;
         this.enabled = true;
+        this.time = new ArrayList<>();
+        this.ticket = 1.0;
     }
     
     public Host(String ip, int port, int priority, boolean enabled){
@@ -31,6 +38,8 @@ public class Host {
         this.connections = 0;
         this.enabled = enabled;
         this.priority = priority;
+        this.time = new ArrayList<>();
+        this.ticket = 1.0;
     }
 
     /**
@@ -64,28 +73,28 @@ public class Host {
     /**
      * @return the connections
      */
-    public int getConnections() {
+    public synchronized int getConnections() {
         return connections;
     }
 
     /**
      * @param connections the connections to set
      */
-    public void setConnections(int connections) {
+    public synchronized void setConnections(int connections) {
         this.connections = connections;
     }
 
     /**
      * @return the enabled
      */
-    public boolean isEnabled() {
+    public synchronized boolean isEnabled() {
         return enabled;
     }
 
     /**
      * @param enabled the enabled to set
      */
-    public void setEnabled(boolean enabled) {
+    public synchronized void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -118,5 +127,47 @@ public class Host {
      */
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    /**
+     * @return the remaningConnections
+     */
+    public synchronized int getRemaningConnections() {
+        return remaningConnections;
+    }
+
+    /**
+     * @param remaningConnections the remaningConnections to set
+     */
+    public synchronized void setRemaningConnections(int remaningConnections) {
+        this.remaningConnections = remaningConnections;
+    }
+
+    /**
+     * @return the time
+     */
+    public synchronized List<Long> getTime() {
+        return time;
+    }
+
+    /**
+     * @param time the time to set
+     */
+    public synchronized void setTime(List<Long> time) {
+        this.time = time;
+    }
+
+    /**
+     * @return the ticket
+     */
+    public synchronized double getTicket() {
+        return ticket;
+    }
+
+    /**
+     * @param ticket the ticket to set
+     */
+    public synchronized void setTicket(double ticket) {
+        this.ticket = ticket;
     }
 }

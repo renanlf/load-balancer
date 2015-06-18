@@ -7,7 +7,6 @@ package edu.br.ufrpe.uag.lb.bean;
 
 import edu.br.ufrpe.uag.lb.model.Host;
 import edu.br.ufrpe.uag.lb.model.LoadBalancer;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
