@@ -44,12 +44,13 @@ public class DinamicWeight implements Algorithm {
         for (int i = 0; i < values.length; i++) {
             double value = values[i];
             double proportion = value / sum;
-            if (proportion >= cumulate && proportion < proportion + cumulate) {
+            if (proportion > cumulate && proportion <= proportion + cumulate) {
                 return i;
             }
             cumulate += proportion;
         }
-        return 0;
+//        return 0;
+        return -1;
     }
 
     public void updateTicket(List<Host> hosts) {
