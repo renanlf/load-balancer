@@ -21,7 +21,7 @@ public class LoadBalancerTest {
      */
     @Test
     @SuppressWarnings("empty-statement")
-    public void test() {
+    public void test() throws InterruptedException {
         //use thread
         Thread thread = new Thread(new Runnable() {
 
@@ -34,10 +34,13 @@ public class LoadBalancerTest {
                 loadBalancer.setActive(true);
                 //create server host
                 Host localhost = new Host("localhost", 80);
+                Host vm1 = new Host("10.0.0.109", 80);
                 //append the server host to load balancer hosts availables
                 loadBalancer.getHosts().add(localhost);
+                loadBalancer.getHosts().add(vm1);
                 //listen on the port 1024 for requests
                 loadBalancer.listen();
+                
             }
         });
         thread.start();
@@ -93,7 +96,7 @@ public class LoadBalancerTest {
                 }
             }
         });
-        thread.start();
+        thread.run();
     }
 
 }

@@ -6,13 +6,13 @@
 package edu.br.ufrpe.uag.lb.algorithms;
 
 import edu.br.ufrpe.uag.lb.model.Host;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class Priority implements Algorithm {
 
     @Override
-    public Host getHost(List<Host> hosts) {
+    public Host getHost(CopyOnWriteArrayList<Host> hosts) {
         int maxPriority = 0;
         Host selectedHost = null;
         for(Host host : hosts){

@@ -6,7 +6,7 @@
 package edu.br.ufrpe.uag.lb.algorithms;
 
 import edu.br.ufrpe.uag.lb.model.Host;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -18,7 +18,7 @@ public class RoundRobin implements Algorithm{
         this.position = 0;
     }
     @Override
-    public Host getHost(List<Host> hosts) {
+    public Host getHost(CopyOnWriteArrayList<Host> hosts) {
         int turn = position % hosts.size();
         position++;
         return hosts.get(turn);

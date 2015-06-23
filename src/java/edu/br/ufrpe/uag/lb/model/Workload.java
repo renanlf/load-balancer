@@ -53,7 +53,7 @@ public class Workload extends Thread {
             socket.close();
             host.setConnections(host.getConnections()-1);
             long time = System.currentTimeMillis() - timeBegin;
-            host.getTime().add(time);
+            host.getTime().add(time*10000);
         } catch (IOException ex) {
             host.setEnabled(false);
             Logger.getLogger(Workload.class.getName()).log(Level.SEVERE, null, ex);

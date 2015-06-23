@@ -18,6 +18,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,13 +34,13 @@ public class LoadBalancer {
 
     private String ip;
     private int port;
-    private final List<Host> hosts;
+    private final CopyOnWriteArrayList<Host> hosts;
     private final Algorithm algorithm;
     private boolean active;
 //    private final List<Request> requests;
 
     private LoadBalancer(int port, Algorithm algorithm) {
-        this.hosts = new ArrayList<>();
+        this.hosts = new CopyOnWriteArrayList<>();
 
         this.algorithm = algorithm;
         this.port = port;
@@ -70,11 +71,13 @@ public class LoadBalancer {
                         DinamicWeight dW = (DinamicWeight) algorithm;
                         System.out.println("UpdateTickets");
                         dW.updateTicket(enabledHosts());
+                        System.out.println("-------------------");
                         connections = 0;
                     }
                 }
                 
                 Host host = algorithm.getHost(enabledHosts());
+                System.out.println("Host selected= "+host.getIp());
                 new Workload(socket, host).start();
             }
             ss.close();
@@ -112,7 +115,7 @@ public class LoadBalancer {
     /**
      * @return the hosts
      */
-    public List<Host> getHosts() {
+    public CopyOnWriteArrayList<Host> getHosts() {
         return hosts;
     }
 
@@ -130,8 +133,8 @@ public class LoadBalancer {
         this.port = port;
     }
 
-    public List<Host> enabledHosts() {
-        List<Host> enabledHost = new ArrayList<>();
+    public CopyOnWriteArrayList<Host> enabledHosts() {
+        CopyOnWriteArrayList<Host> enabledHost = new CopyOnWriteArrayList<>();
         for (Host host : this.hosts) {
             if (host.isEnabled()) {
                 enabledHost.add(host);

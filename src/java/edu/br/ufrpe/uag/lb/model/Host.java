@@ -8,6 +8,7 @@ package edu.br.ufrpe.uag.lb.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Host {
     private boolean enabled;
     private int priority;
     private int remaningConnections = 0;
-    private List<Long> time;
+    private CopyOnWriteArrayList<Long> time;
     private double ticket;
     
     public Host(String ip, int port){
@@ -28,7 +29,7 @@ public class Host {
         this.port = port;
         this.connections = 0;
         this.enabled = true;
-        this.time = new ArrayList<>();
+        this.time = new CopyOnWriteArrayList<>();
         this.ticket = 1.0;
     }
     
@@ -38,7 +39,7 @@ public class Host {
         this.connections = 0;
         this.enabled = enabled;
         this.priority = priority;
-        this.time = new ArrayList<>();
+        this.time = new CopyOnWriteArrayList<>();
         this.ticket = 1.0;
     }
 
@@ -146,14 +147,14 @@ public class Host {
     /**
      * @return the time
      */
-    public synchronized List<Long> getTime() {
+    public synchronized CopyOnWriteArrayList<Long> getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public synchronized void setTime(List<Long> time) {
+    public synchronized void setTime(CopyOnWriteArrayList<Long> time) {
         this.time = time;
     }
 
