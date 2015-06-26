@@ -7,6 +7,7 @@ package edu.br.ufrpe.uag.lb.bean;
 
 import edu.br.ufrpe.uag.lb.model.Host;
 import edu.br.ufrpe.uag.lb.model.LoadBalancer;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
@@ -17,43 +18,34 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class ServerBean {
 
-    private String hostAddr;
-    private int port, priority;
-    private boolean enabled, render;
-    private Host[] hosts;
-    private Host host = new Host("", 0);
+    private boolean render;
+    private CopyOnWriteArrayList<Host> hosts;
+    private Host host = new Host("localhost", 80);
 
     @PostConstruct
     public void init() {
-        setHosts(LoadBalancer.getInstance().getHosts().toArray(new Host[0]));
+        setHosts(LoadBalancer.getInstance().getHosts());
     }
 
     public void add() {
-        if (!LoadBalancer.getInstance().getHosts().contains(host)) {
-            LoadBalancer.getInstance().getHosts().add(getHost());
-
-            setHosts(LoadBalancer.getInstance().getHosts().toArray(new Host[0]));
-        } else{
+        if(hosts.contains(host)){
             setRender(true);
+        } else {
+            setRender(false);
+            hosts.add(host);
         }
     }
-    
-    public void updateSelectHost(Host host){
-        this.setHost(host);
-    }
-
-
     /**
      * @return the hosts
      */
-    public Host[] getHosts() {
+    public CopyOnWriteArrayList<Host> getHosts() {
         return hosts;
     }
 
     /**
      * @param hosts the hosts to set
      */
-    public void setHosts(Host[] hosts) {
+    public void setHosts(CopyOnWriteArrayList<Host> hosts) {
         this.hosts = hosts;
     }
 

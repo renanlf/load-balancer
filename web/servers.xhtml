@@ -54,8 +54,8 @@ and open the template in the editor.
                         </h:column>
                         
                         <h:column>
-                            <f:facet name="edit">Edit</f:facet>
-                            <h:commandButton value="Edit" actionListener="#{serverBean.updateSelectHost(host)}"/>
+                            <f:facet name="remove">Remove</f:facet>
+                            <h:commandButton value="Remove" actionListener="#{serverBean.hosts.remove(host)}"/>
                         </h:column>
                     </h:dataTable>
                 </h:form>

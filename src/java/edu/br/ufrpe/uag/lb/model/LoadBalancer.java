@@ -16,8 +16,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +49,7 @@ public class LoadBalancer {
     public static LoadBalancer getInstance() {
         if (instance == null) {
             instance = new LoadBalancer(80, new DinamicWeight());
+            instance.setPort(1024);
         }
         return instance;
     }

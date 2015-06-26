@@ -34,7 +34,8 @@ public class LoadBalancerTest {
                 loadBalancer.setActive(true);
                 //create server host
                 Host localhost = new Host("localhost", 80);
-                Host vm1 = new Host("10.0.0.109", 80);
+                //vaio host - other computer
+                Host vm1 = new Host("10.0.0.107", 80);
                 //append the server host to load balancer hosts availables
                 loadBalancer.getHosts().add(localhost);
                 loadBalancer.getHosts().add(vm1);

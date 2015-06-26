@@ -28,7 +28,7 @@ public class ConfigureBean {
     }
 
     /**
-     * @param Port the Port to set
+     * @param port the Port to set
      */
     public void setPort(int port) {
         this.port = port;
