@@ -7,6 +7,7 @@ package edu.br.ufrpe.uag.lb.model;
 
 import edu.br.ufrpe.uag.lb.algorithms.Algorithm;
 import edu.br.ufrpe.uag.lb.algorithms.DinamicWeight;
+import edu.br.ufrpe.uag.lb.algorithms.RoundRobin;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +50,7 @@ public class LoadBalancer {
     public static LoadBalancer getInstance() {
         if (instance == null) {
             instance = new LoadBalancer(80, new DinamicWeight());
+//            instance = new LoadBalancer(80, new RoundRobin());
             instance.setPort(1024);
         }
         return instance;
