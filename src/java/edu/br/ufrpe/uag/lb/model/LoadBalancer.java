@@ -95,11 +95,11 @@ public class LoadBalancer {
 
     }
 
-    public static String getStringFromInputStream(InputStream in) {
+    public static String getStringFromInputStream(InputStream in) throws IOException {
         if (in != null) {
             Writer writer = new StringWriter();
 
-            char[] buffer = new char[2048];
+            char[] buffer = new char[4096];
             try {
                 Reader reader = new BufferedReader(new InputStreamReader(in));
                 int i = reader.read(buffer);
@@ -111,6 +111,20 @@ public class LoadBalancer {
         } else {
             return "";
         }
+        
+//        if(in != null){
+//            Reader reader = new BufferedReader(new InputStreamReader(in));
+//            Writer writer = new StringWriter();
+//            
+//            char[] buffer = new char[2048];
+//            int length;
+//            while((length = reader.read(buffer)) != -1){
+//                writer.write(buffer, 0, length);
+//            }
+//            return writer.toString();
+//        }
+//        
+//        throw new IOException("InputStream not found!");
 
     }
 
