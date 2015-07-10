@@ -88,14 +88,14 @@ public class Host {
     /**
      * @return the enabled
      */
-    public synchronized boolean isEnabled() {
+    public boolean isEnabled() {
         return enabled;
     }
 
     /**
      * @param enabled the enabled to set
      */
-    public synchronized void setEnabled(boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -133,42 +133,42 @@ public class Host {
     /**
      * @return the remaningConnections
      */
-    public synchronized int getRemaningConnections() {
+    public int getRemaningConnections() {
         return remaningConnections;
     }
 
     /**
      * @param remaningConnections the remaningConnections to set
      */
-    public synchronized void setRemaningConnections(int remaningConnections) {
+    public void setRemaningConnections(int remaningConnections) {
         this.remaningConnections = remaningConnections;
     }
 
     /**
      * @return the time
      */
-    public synchronized CopyOnWriteArrayList<Long> getTime() {
+    public CopyOnWriteArrayList<Long> getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public synchronized void setTime(CopyOnWriteArrayList<Long> time) {
+    public void setTime(CopyOnWriteArrayList<Long> time) {
         this.time = time;
     }
 
     /**
      * @return the ticket
      */
-    public synchronized double getTicket() {
+    public double getTicket() {
         return ticket;
     }
 
     /**
      * @param ticket the ticket to set
      */
-    public synchronized void setTicket(double ticket) {
+    public void setTicket(double ticket) {
         this.ticket = ticket;
     }
 }

@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class LoadBalancer {
     
-    private static final int LIMIAR = 30;
+    private static final int LIMIAR = 75;
 
     private static LoadBalancer instance = null;
 
@@ -49,8 +49,8 @@ public class LoadBalancer {
 
     public static LoadBalancer getInstance() {
         if (instance == null) {
-            instance = new LoadBalancer(80, new DinamicWeight());
-//            instance = new LoadBalancer(80, new RoundRobin());
+//            instance = new LoadBalancer(80, new DinamicWeight());
+            instance = new LoadBalancer(80, new RoundRobin());
             instance.setPort(1024);
         }
         return instance;
@@ -79,7 +79,8 @@ public class LoadBalancer {
                 
                 Host host = algorithm.getHost(enabledHosts());
                 System.out.println("Host selected= "+host.getIp());
-                new Workload(socket, host).start();
+                Thread t = new Thread(new Workload(socket, host));
+                t.start();
             }
             ss.close();
         } catch (IOException ex) {

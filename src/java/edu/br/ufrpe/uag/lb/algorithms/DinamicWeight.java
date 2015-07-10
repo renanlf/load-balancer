@@ -21,7 +21,7 @@ public class DinamicWeight implements Algorithm {
     private static final double MAX = 1;
 
     @Override
-    public Host getHost(CopyOnWriteArrayList<Host> hosts) {
+    public synchronized Host getHost(CopyOnWriteArrayList<Host> hosts) {
         double[] values = new double[hosts.size()];
         double sum = 0;
         for (int i = 0; i < hosts.size(); i++) {
@@ -54,7 +54,7 @@ public class DinamicWeight implements Algorithm {
         throw new UnsupportedOperationException("Error!");
     }
 
-    public void updateTicket(CopyOnWriteArrayList<Host> hosts) {
+    public synchronized void updateTicket(CopyOnWriteArrayList<Host> hosts) {
         for (Host host : hosts) {
             if (host.getConnections() > 0 && host.getTime().size() > 0) {
                 long mean = 0;

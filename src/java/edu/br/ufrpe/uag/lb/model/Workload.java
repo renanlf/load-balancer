@@ -12,21 +12,18 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author renan
  */
-public class Workload extends Thread {
+public class Workload implements Runnable {
 
     private final Socket socket;
     private final Algorithm algorithm;
     private final Host host;
 
     public Workload(Socket socket, Host host) {
-        super("Workload");
         this.socket = socket;
         this.algorithm = null;
         this.host = host;
@@ -37,12 +34,16 @@ public class Workload extends Thread {
         InputStream in;
         try {
             long timeBegin = System.currentTimeMillis();
+            
             in = socket.getInputStream();
+            
             String get = getStringFromInputStream(in);
             String firstLine = get.split("\n")[0];
             String url = firstLine.split(" ")[1];
             URL destiny = new URL("http://" + host.getIp() + ":" + host.getPort() + url);
+            
             host.setConnections(host.getConnections() + 1);
+            
             HttpURLConnection conn = (HttpURLConnection) destiny.openConnection();
             byte[] byteData = new byte[2048];
             int length;
@@ -51,12 +52,13 @@ public class Workload extends Thread {
             }
             in.close();
             socket.close();
+            
             host.setConnections(host.getConnections()-1);
             long time = System.currentTimeMillis() - timeBegin;
-            host.getTime().add(time*10000);
+            host.getTime().add(time);
         } catch (IOException ex) {
-            host.setEnabled(false);
-            Logger.getLogger(Workload.class.getName()).log(Level.SEVERE, null, ex);
+//            host.setEnabled(false);
+//            Logger.getLogger(Workload.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
