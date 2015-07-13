@@ -27,11 +27,10 @@ import java.util.logging.Logger;
  */
 public class LoadBalancer {
     
-    private static final int LIMIAR = 75;
+    private static final int LIMIAR = 50;
 
     private static LoadBalancer instance = null;
-
-    private String ip;
+    
     private int port;
     private final CopyOnWriteArrayList<Host> hosts;
     private final Algorithm algorithm;
@@ -40,7 +39,6 @@ public class LoadBalancer {
 
     private LoadBalancer(int port, Algorithm algorithm) {
         this.hosts = new CopyOnWriteArrayList<>();
-
         this.algorithm = algorithm;
         this.port = port;
         this.active = false;

@@ -5,12 +5,9 @@
  */
 package edu.br.ufrpe.uag.lb.model;
 
-import static edu.br.ufrpe.uag.lb.model.LoadBalancer.getStringFromInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.URL;
 
 /**
  *
@@ -34,7 +31,7 @@ public class Workload implements Runnable {
             
             in = socket.getInputStream();
             
-            String get = getStringFromInputStream(in);
+//            String get = getStringFromInputStream(in);
 //            
 //            String firstLine = get.split("\n")[0];
 //            String url = firstLine.split(" ")[1];
@@ -42,36 +39,46 @@ public class Workload implements Runnable {
             
             host.setConnections(host.getConnections() + 1);
             
+//            System.out.println("Abrindo Socket--------------");
             Socket conn = new Socket(host.getIp(), host.getPort());
             
-//            byte[] buffer = new byte[2048];
-//            int length1;
+//            System.out.println("Transferindo GET");
+            byte[] buffer = new byte[2048];
+            int length1 = in.read(buffer);
+            if(length1 != -1){
+                conn.getOutputStream().write(buffer, 0, length1);
+            }
 //            while((length1 = in.read(buffer)) != -1){
 //                conn.getOutputStream().write(buffer, 0, length1);
 //            }
-//            in.close();
+            conn.getOutputStream().flush();
             
-            PrintWriter pw = new PrintWriter(conn.getOutputStream());
-            
-            pw.println(get);
-            pw.flush();
+//            PrintWriter pw = new PrintWriter(conn.getOutputStream());
+//            
+//            pw.println(get);
+//            pw.flush();
             
 //            HttpURLConnection conn = (HttpURLConnection) destiny.openConnection();
             
+//            System.out.println("Transferindo saída do socket para a request");
             byte[] byteData = new byte[2048];
             int length;
             while ((length = conn.getInputStream().read(byteData)) != -1) {
                 socket.getOutputStream().write(byteData, 0, length);
             }
+//            System.out.println("Finalizando...");
             conn.close();
+            in.close();
             socket.close();
             
             host.setConnections(host.getConnections()-1);
             long time = System.currentTimeMillis() - timeBegin;
             host.getTime().add(time);
+//            System.out.println("Fim-----------------");
         } catch (IOException ex) {
 //            host.setEnabled(false);
 //            Logger.getLogger(Workload.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }
