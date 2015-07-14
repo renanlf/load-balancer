@@ -47,8 +47,8 @@ public class LoadBalancer {
 
     public static LoadBalancer getInstance() {
         if (instance == null) {
-//            instance = new LoadBalancer(80, new DinamicWeight());
-            instance = new LoadBalancer(80, new RoundRobin());
+            instance = new LoadBalancer(80, new DinamicWeight());
+//            instance = new LoadBalancer(80, new RoundRobin());
             instance.setPort(1024);
         }
         return instance;

@@ -65,10 +65,10 @@ public class DinamicWeight implements Algorithm {
                 if(Double.isFinite(value)){
                     host.setTicket(value);
                 } else {
-                    host.setTicket(1.0);
+                    host.setTicket(MAX);
                 }
             } else {
-                host.setTicket(1.0);
+                host.setTicket(MAX);
             }
             host.getTime().clear();
             System.out.println(host.getIp()+" ticket= "+host.getTicket());
